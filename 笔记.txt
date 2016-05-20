@@ -1,4 +1,6 @@
-HTTP幂等性:http://www.cnblogs.com/weidagang2046/archive/2011/06/04/2063696.html
+HTTP幂等性:
+http://www.cnblogs.com/weidagang2046/archive/2011/06/04/2063696.html
+http://blog.csdn.net/mad1989/article/details/7918267
 
 比较容易混淆的是HTTP POST和PUT。POST和PUT的区别容易被简单地误认为“POST表示创建资源，PUT表示更新资源”；而实际上，二者均可用于创建资源，更为本质的差别是在幂等性方面。在HTTP规范中对POST和PUT是这样定义的：
 
@@ -6,3 +8,6 @@ The POST method is used to request that the origin server accept the entity encl
 
 The PUT method requests that the enclosed entity be stored under the supplied Request-URI. If the Request-URI refers to an already existing resource, the enclosed entity SHOULD be considered as a modified version of the one residing on the origin server. If the Request-URI does not point to an existing resource, and that URI is capable of being defined as a new resource by the requesting user agent, the origin server can create the resource with that URI.
 POST所对应的URI并非创建的资源本身，而是资源的接收者。比如：POST http://www.forum.com/articles的语义是在http://www.forum.com/articles下创建一篇帖子，HTTP响应中应包含帖子的创建状态以及帖子的URI。两次相同的POST请求会在服务器端创建两份资源，它们具有不同的URI；所以，POST方法不具备幂等性。而PUT所对应的URI是要创建或更新的资源本身。比如：PUT http://www.forum/articles/4231的语义是创建或更新ID为4231的帖子。对同一URI进行多次PUT的副作用和一次PUT是相同的；因此，PUT方法具有幂等性。
+
+
+在HTTP中，PUT被定义为idempotent的方法，POST则不是，这是一个很重要的区别。
